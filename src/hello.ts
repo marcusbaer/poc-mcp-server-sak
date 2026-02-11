@@ -1,10 +1,15 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-// import { z } from "zod";
+import { z } from "zod";
+import {
+  AnySchema,
+  ZodRawShapeCompat,
+} from "@modelcontextprotocol/sdk/server/zod-compat.js";
 
 interface Tool {
   name: string;
   description: string;
-  params: object;
+  inputSchema?: AnySchema | ZodRawShapeCompat | undefined;
+  outputSchema?: AnySchema | ZodRawShapeCompat | undefined;
   handle: Function;
 }
 
@@ -13,12 +18,12 @@ export class HelloTools {
     this.registerTools(server);
   }
 
-  private async helloHandle() {
+  private async helloHandle({ name = "" }) {
     return {
       content: [
         {
           type: "text",
-          text: "Hello",
+          text: name ? `Hello, ${name}` : `Hello`,
         },
       ],
     };
@@ -29,9 +34,10 @@ export class HelloTools {
       {
         name: "hello",
         description: "Greet the user by tool usage",
-        params: {
-          // name: z.string().describe("Name of a person"),
+        inputSchema: {
+          name: z.string().describe("Name of a person"),
         },
+        outputSchema: undefined,
         handle: this.helloHandle,
       },
     ];
@@ -43,8 +49,12 @@ export class HelloTools {
 
   private async addTool(
     server: McpServer,
-    { name, description, params, handle }: Tool,
+    { name, description, inputSchema, outputSchema, handle }: Tool,
   ) {
-    server.tool(name, description, params, handle);
+    server.registerTool(
+      name,
+      { description, inputSchema, outputSchema },
+      handle as any,
+    );
   }
 }
