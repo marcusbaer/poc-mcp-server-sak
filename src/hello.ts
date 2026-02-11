@@ -34,7 +34,29 @@ export class HelloTools extends BaseTools {
       name,
       greeting: name ? `Hello, ${name}` : `Hello`,
     };
-    return { content: [{ type: "text", text: JSON.stringify(data) }] };
+    return {
+      content: [
+        { type: "text", text: JSON.stringify(data) },
+        // {
+        //   type: "image",
+        //   data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==", // Base64-kodiert
+        //   mimeType: "image/png",
+        // },
+        // {
+        //   type: "resource",
+        //   resource: {
+        //     uri: "cache://reports/daily-stats.json",
+        //     text: "Full JSON report data...", // Optionaler Text-Content
+        //     mimeType: "application/json",
+        //   },
+        // },
+        // {
+        //   type: "text",
+        //   text: JSON.stringify(data),
+        //   mimeType: "application/json",
+        // },
+      ],
+    };
   }
 
   private async promptHandle(args: any) {
