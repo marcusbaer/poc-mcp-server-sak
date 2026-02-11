@@ -43,15 +43,16 @@ export class TimeTools extends BaseTools {
   private async localHandle({ city = "" }) {
     const now = new Date();
     const iso = now.toISOString();
+    const json = {
+      city,
+      time: iso,
+      note: "Local time feature is not yet supported. Returned time is ISO formatted UTC time only.",
+    };
     return {
       content: [
         {
-          type: "json",
-          json: {
-            city,
-            time: iso,
-            note: "Local time feature is not yet supported. Returned time is ISO formatted UTC time only.",
-          },
+          type: "text",
+          text: JSON.stringify(json, null, 2),
         },
       ],
     };
@@ -61,14 +62,15 @@ export class TimeTools extends BaseTools {
     const now = new Date();
     const iso = now.toISOString();
     const utc = now.getTime();
+    const json = {
+      time: iso,
+      timestamp: utc,
+    };
     return {
       content: [
         {
-          type: "json",
-          json: {
-            time: iso,
-            timestamp: utc,
-          },
+          type: "text",
+          text: JSON.stringify(json, null, 2),
         },
       ],
     };
