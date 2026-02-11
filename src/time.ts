@@ -18,7 +18,10 @@ export class TimeTools extends BaseTools {
         name: "utc-time",
         description: "Get current UTC time",
         inputSchema: undefined,
-        outputSchema: undefined,
+        outputSchema: {
+          time: z.string().describe("ISO formatted UTC time"),
+          timestamp: z.number().describe("UTC timestamp"),
+        },
         handle: this.utcHandle,
       },
       {
@@ -27,18 +30,45 @@ export class TimeTools extends BaseTools {
         inputSchema: {
           city: z.string().describe("Name of a city"),
         },
-        outputSchema: undefined,
-        handle: this.utcHandle,
+        outputSchema: {
+          city: z.string().describe("Name of a city"),
+          time: z.string().describe("ISO formatted time"),
+          note: z.string().describe("Additional note"),
+        },
+        handle: this.localHandle,
       },
     ];
   }
 
-  private async utcHandle({ name = "" }) {
+  private async localHandle({ city = "" }) {
+    const now = new Date();
+    const iso = now.toISOString();
     return {
       content: [
         {
-          type: "text",
-          text: name ? `Hello, ${name}` : `Hello`,
+          type: "json",
+          json: {
+            city,
+            time: iso,
+            note: "Local time feature is not yet supported. Returned time is ISO formatted UTC time only.",
+          },
+        },
+      ],
+    };
+  }
+
+  private async utcHandle() {
+    const now = new Date();
+    const iso = now.toISOString();
+    const utc = now.getTime();
+    return {
+      content: [
+        {
+          type: "json",
+          json: {
+            time: iso,
+            timestamp: utc,
+          },
         },
       ],
     };

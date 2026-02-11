@@ -38,13 +38,31 @@ docker run --rm --network host -p 6274:6274 -p 6277:6277 ghcr.io/modelcontextpro
 
 ### hello
 
-Greets the client, some sort of ping.
+Greets the client, some sort of ping. Is using the name, if known.
+
+**Params:**
+
+- `name` (optional): string
+
+### utc-time
+
+Returns UTC timestamp.
+
+### local-time
+
+Returns local time, by a given city, if applicable.
+
+**Params:**
+
+- `city`: string
 
 ### fetch (tbd.)
 
-param: URL
+Get content by URL.
 
-get content by URL
+**Params:**
+
+- `url`: string
 
 ### markdown-to-html (tbd.)
 
