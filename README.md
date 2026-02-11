@@ -44,6 +44,10 @@ Greets the client, some sort of ping. Is using the name, if known.
 
 - `name` (optional): string
 
+### random-city
+
+Returns a random city and its country.
+
 ### utc-time
 
 Returns UTC timestamp.
