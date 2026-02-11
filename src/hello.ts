@@ -18,7 +18,8 @@ export class HelloTools extends BaseTools {
     return [
       {
         name: "hello",
-        description: "Greet the user by tool usage",
+        description:
+          "Greet the user by tool usage. Returns a JSON object with 'name' and 'greeting'.",
         inputSchema: z.object({
           name: z.string().describe("Name of a person"),
         }),
@@ -29,14 +30,11 @@ export class HelloTools extends BaseTools {
   }
 
   private async helloHandle({ name = "" }) {
-    return {
-      content: [
-        {
-          type: "text",
-          text: name ? `Hello, ${name}` : `Hello`,
-        },
-      ],
+    const data = {
+      name,
+      greeting: name ? `Hello, ${name}` : `Hello`,
     };
+    return { content: [{ type: "text", text: JSON.stringify(data) }] };
   }
 
   private async promptHandle(args: any) {

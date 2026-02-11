@@ -16,25 +16,27 @@ export class TimeTools extends BaseTools {
     return [
       {
         name: "utc-time",
-        description: "Get current UTC time",
+        description:
+          "Get current UTC time. Returns a JSON object with 'time' and 'timestamp'.",
         inputSchema: undefined,
-        outputSchema: z.object({
-          time: z.string().describe("ISO formatted UTC time"),
-          timestamp: z.number().describe("UTC timestamp"),
-        }),
+        // outputSchema: z.object({
+        //   time: z.string().describe("ISO formatted UTC time"),
+        //   timestamp: z.number().describe("UTC timestamp"),
+        // }),
         handle: this.utcHandle,
       },
       {
         name: "local-time",
-        description: "Get current local time",
+        description:
+          "Get current local time. Returns a JSON object with 'time', 'city' and 'note'.",
         inputSchema: z.object({
           city: z.string().describe("Name of a city"),
         }),
-        outputSchema: z.object({
-          city: z.string().describe("Name of a city"),
-          time: z.string().describe("ISO formatted time"),
-          note: z.string().describe("Additional note"),
-        }),
+        // outputSchema: z.object({
+        //   city: z.string().describe("Name of a city"),
+        //   time: z.string().describe("ISO formatted time"),
+        //   note: z.string().describe("Additional note"),
+        // }),
         handle: this.localHandle,
       },
     ];
@@ -42,53 +44,21 @@ export class TimeTools extends BaseTools {
 
   private async localHandle({ city = "" }) {
     const now = new Date();
-    const iso = now.toISOString();
-    const json = {
+    const data = {
       city,
-      time: iso,
+      time: now.toISOString(),
       note: "Local time feature is not yet supported. Returned time is ISO formatted UTC time only.",
     };
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(json, null, 2),
-          mimeType: "application/json",
-        },
-      ],
-    };
+    return { content: [{ type: "text", text: JSON.stringify(data) }] };
   }
 
   private async utcHandle() {
     const now = new Date();
-    const iso = now.toISOString();
-    const utc = now.getTime();
-    const json = {
-      time: iso,
-      timestamp: utc,
+    const data = {
+      time: now.toISOString(),
+      timestamp: now.getTime(),
     };
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(json, null, 2),
-          mimeType: "application/json",
-        },
-        // {
-        //   type: "image",
-        //   data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==", // Base64-kodiert
-        //   mimeType: "image/png",
-        // },
-        // {
-        //   type: "resource",
-        //   resource: {
-        //     uri: "cache://reports/daily-stats.json",
-        //     text: "Full JSON report data...", // Optionaler Text-Content
-        //     mimeType: "application/json",
-        //   },
-        // },
-      ],
-    };
+    return { content: [{ type: "text", text: JSON.stringify(data) }] };
   }
 
   private async promptHandle(args: any) {
