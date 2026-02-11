@@ -3,6 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { HelloTools } from "./hello.js";
+import { TimeTools } from "./time.js";
 
 const server = new McpServer({
   name: "Swiss Army Knife",
@@ -10,6 +11,7 @@ const server = new McpServer({
 });
 
 const helloTools = new HelloTools(server);
+const timeTools = new TimeTools(server);
 
 async function main() {
   const transport = new StdioServerTransport();
