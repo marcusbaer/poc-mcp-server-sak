@@ -6,9 +6,9 @@ export class HelloTools extends BaseTools {
     return [
       {
         name: "hello-instruction",
-        argsSchema: {
+        argsSchema: z.object({
           name: z.string().describe("Name of a person"),
-        },
+        }),
         handle: this.promptHandle,
       },
     ];
@@ -19,9 +19,9 @@ export class HelloTools extends BaseTools {
       {
         name: "hello",
         description: "Greet the user by tool usage",
-        inputSchema: {
+        inputSchema: z.object({
           name: z.string().describe("Name of a person"),
-        },
+        }),
         outputSchema: undefined,
         handle: this.helloHandle,
       },

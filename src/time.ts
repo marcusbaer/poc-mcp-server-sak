@@ -18,23 +18,23 @@ export class TimeTools extends BaseTools {
         name: "utc-time",
         description: "Get current UTC time",
         inputSchema: undefined,
-        outputSchema: {
+        outputSchema: z.object({
           time: z.string().describe("ISO formatted UTC time"),
           timestamp: z.number().describe("UTC timestamp"),
-        },
+        }),
         handle: this.utcHandle,
       },
       {
         name: "local-time",
         description: "Get current local time",
-        inputSchema: {
+        inputSchema: z.object({
           city: z.string().describe("Name of a city"),
-        },
-        outputSchema: {
+        }),
+        outputSchema: z.object({
           city: z.string().describe("Name of a city"),
           time: z.string().describe("ISO formatted time"),
           note: z.string().describe("Additional note"),
-        },
+        }),
         handle: this.localHandle,
       },
     ];
