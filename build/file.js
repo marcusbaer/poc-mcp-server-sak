@@ -38,12 +38,12 @@ export class FileTools extends BaseTools {
         const dir = path.join(homedir(), filename);
         try {
             const fileContent = readFileSync(dir, { encoding: 'utf8' });
-            return fileContent;
+            return { success: true, path: dir, content: fileContent };
         }
         catch (error) {
             if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-                // Return empty string for non-existent files instead of throwing
-                return '';
+                // Return empty content for non-existent files instead of throwing
+                return { success: false, path: dir, content: '', error: 'File not found' };
             }
             throw error;
         }
@@ -55,7 +55,7 @@ export class FileTools extends BaseTools {
         mkdirSync(dirPath, { recursive: true });
         // Write file (flag 'w' creates new file or overwrites existing)
         writeFileSync(dir, body, { encoding: 'utf8', flag: 'w' });
-        return dir;
+        return { success: true, path: dir };
     }
     async promptHandle(args) {
         return {
