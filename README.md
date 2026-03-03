@@ -36,6 +36,14 @@ docker run --rm --network host -p 6274:6274 -p 6277:6277 ghcr.io/modelcontextpro
 
 ## Tools
 
+### city-wiki
+
+Get information about a given city from Wikipedia.
+
+**Params:**
+
+- `city`: string
+
 ### hello
 
 Greets the client, some sort of ping. Is using the name, if known.

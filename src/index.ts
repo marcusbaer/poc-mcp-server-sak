@@ -4,7 +4,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { HelloTools } from "./hello.js";
 import { TimeTools } from "./time.js";
-import { RandomTools } from "./random.js";
+import { CityTools } from "./city.js";
+import { FileTools } from "./file.js";
 
 const server = new McpServer({
   name: "Swiss Army Knife",
@@ -12,7 +13,8 @@ const server = new McpServer({
 });
 
 const helloTools = new HelloTools(server);
-const randomTools = new RandomTools(server);
+const cityTools = new CityTools(server);
+const fileTools = new FileTools(server);
 const timeTools = new TimeTools(server);
 
 async function main() {

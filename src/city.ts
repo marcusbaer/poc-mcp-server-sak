@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { BaseTools } from "./base.js";
 
-export class RandomTools extends BaseTools {
+export class CityTools extends BaseTools {
   getInstructions() {
     return [
       {
-        name: "random-instruction",
+        name: "city-instruction",
         argsSchema: undefined,
         handle: this.promptHandle,
       },
